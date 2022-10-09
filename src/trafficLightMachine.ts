@@ -1,34 +1,28 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { createMachine } from 'xstate';
 
-type TrafficLightEvents = { type: 'NEXT' };
+type TrafficLightEvent = { type: 'NEXT' };
 
-type TrafficLightStates = { value: 'red'; context: undefined };
-{
-	value: 'yellow';
-	context: undefined;
-}
-{
-	value: 'green';
-	context: undefined;
-}
+type TraffiLightState =
+	| { value: 'green'; context: undefined }
+	| { value: 'yellow'; context: undefined }
+	| { value: 'red'; context: undefined };
 
 export const trafficLightMachine = createMachine<
-	undefined,
-	TrafficLightEvents,
-	TrafficLightStates
+	undefined, // We don’t have context, so we type it as undefined
+	TrafficLightEvent,
+	TraffiLightState
 >({
+	id: 'trafficLight',
 	initial: 'red',
-	id: 'traffic-light',
 	states: {
 		green: {
-			on: { NEXT: 'yellow' },
-		},
-		yellow: {
 			on: { NEXT: 'red' },
 		},
-		red: {
+		yellow: {
 			on: { NEXT: 'green' },
+		},
+		red: {
+			on: { NEXT: 'yellow' },
 		},
 	},
 });
