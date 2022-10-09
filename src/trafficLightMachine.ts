@@ -17,12 +17,21 @@ export const trafficLightMachine = createMachine<
 	states: {
 		green: {
 			on: { NEXT: 'red' },
-		},
-		yellow: {
-			on: { NEXT: 'green' },
+			after: {
+				3500: 'red',
+			},
 		},
 		red: {
 			on: { NEXT: 'yellow' },
+			after: {
+				3500: 'yellow',
+			},
+		},
+		yellow: {
+			on: { NEXT: 'green' },
+			after: {
+				3500: 'green',
+			},
 		},
 	},
 });
